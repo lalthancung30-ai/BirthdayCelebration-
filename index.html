@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy Birthday Lal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#150F0D;
+  --ink-deep:#0B0807;
+  --maroon:#701F2A;
+  --maroon-deep:#4A1219;
+  --gold:#C69A4A;
+  --gold-bright:#F0CE7E;
+  --gold-dim:#8A6B32;
+  --jade:#3F7A64;
+  --parchment:#F4E6C8;
+  --ember:#E36A32;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+
+body{
+  margin:0;
+  min-height:100svh;
+  display:grid;
+  place-items:center;
+  padding:30px 16px;
+  overflow-x:hidden;
+  color:var(--parchment);
+  font-family:'Cormorant Garamond', Georgia, serif;
+  background:
+    radial-gradient(120% 70% at 50% -10%, #2A1512 0%, #1A0F0C 42%, #0F0908 78%, #0A0605 100%);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/* faint gilded motif, corners only — echoes lacquerware gold-leaf inlay */
+.motif{
+  position:fixed;
+  width:220px; height:220px;
+  opacity:.16;
+  pointer-events:none;
+  z-index:0;
+  background:
+    radial-gradient(circle at 30% 30%, transparent 0 34px, var(--gold) 35px 37px, transparent 38px),
+    radial-gradient(circle at 70% 70%, transparent 0 24px, var(--gold) 25px 27px, transparent 28px);
+  filter:blur(.2px);
+}
+.motif.tl{ top:-40px; left:-40px; }
+.motif.br{ bottom:-40px; right:-40px; transform:rotate(180deg); }
+
+#bokeh{ position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+#bokeh span{
+  position:absolute;
+  bottom:-60px;
+  border-radius:50%;
+  background:radial-gradient(circle at 34% 32%, var(--gold-bright) 0%, rgba(240,206,126,.25) 55%, rgba(240,206,126,0) 72%);
+  box-shadow:0 0 14px rgba(240,206,126,.45);
+  animation-name:rise;
+  animation-timing-function:linear;
+  animation-iteration-count:infinite;
+}
+@keyframes rise{
+  from{ transform:translateY(0) scale(.7); }
+  to  { transform:translateY(-118vh) scale(1.15); }
+}
+
+#fx{ position:fixed; inset:0; z-index:20; pointer-events:none; }
+
+.stage{
+  position:relative;
+  z-index:2;
+  width:min(94vw, 460px);
+  text-align:center;
+}
+
+.eyebrow{
+  margin:0 0 10px;
+  font-family:'Cormorant Garamond', serif;
+  font-size:.92rem;
+  font-style:italic;
+  font-weight:500;
+  color:var(--gold-bright);
+  letter-spacing:.02em;
+}
+
+.title{
+  margin:0 0 4px;
+  font-family:'Playfair Display', Georgia, serif;
+  font-size:clamp(1.5rem, 6vw, 2rem);
+  font-weight:700;
+  line-height:1.35;
+  color:var(--parchment);
+}
+.title em{
+  font-style:italic;
+  font-weight:600;
+  color:var(--gold-bright);
+}
+
+.scene{
+  position:relative;
+  height:284px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  margin-top:18px;
+}
+
+.halo{
+  position:absolute;
+  left:50%; bottom:120px;
+  width:360px; height:230px;
+  margin-left:-180px;
+  pointer-events:none;
+  background:radial-gradient(ellipse at 50% 50%,
+    rgba(240,206,126,.5) 0%,
+    rgba(227,106,50,.24) 40%,
+    rgba(227,106,50,0) 72%);
+  filter:blur(9px);
+  transition:opacity .9s ease;
+  animation:haloPulse 3.2s ease-in-out infinite;
+}
+@keyframes haloPulse{
+  0%,100%{ transform:scale(1); opacity:.95; }
+  50%    { transform:scale(1.06); opacity:1; }
+}
+.scene.blown .halo{ opacity:0; animation:none; }
+
+.cake{
+  position:relative;
+  z-index:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  filter:drop-shadow(0 24px 28px rgba(0,0,0,.55));
+}
+
+.tier{ position:relative; border-radius:8px 8px 4px 4px; }
+
+.tier-top{
+  width:164px; height:58px;
+  z-index:1;
+  background:linear-gradient(180deg,#241512 0%, #150C0A 100%);
+  box-shadow:
+    inset 0 0 0 2px rgba(198,154,74,.55),
+    inset 0 -10px 16px rgba(0,0,0,.4);
+}
+
+.tier-bottom{
+  width:246px; height:78px;
+  margin-top:-10px;
+  z-index:2;
+  background:linear-gradient(180deg,#7A2632 0%, #56141E 55%, #3F0F17 100%);
+  box-shadow:
+    inset 0 0 0 2px rgba(198,154,74,.5),
+    inset 0 -14px 22px rgba(0,0,0,.35);
+}
+
+.gilt-rim{
+  position:absolute;
+  top:0; left:6px; right:6px;
+  height:3px;
+  background:linear-gradient(90deg, transparent, var(--gold-bright) 20%, var(--gold) 50%, var(--gold-bright) 80%, transparent);
+  opacity:.9;
+}
+
+.tier-top .gilt-rim{ top:10px; }
+.tier-bottom .gilt-rim{ top:14px; }
+
+.name-band{
+  position:absolute;
+  left:50%; top:56%;
+  transform:translate(-50%,-50%);
+  padding:5px 16px 5px 18px;
+  font-family:'Playfair Display', Georgia, serif;
+  font-size:.72rem;
+  font-weight:700;
+  letter-spacing:.32em;
+  color:var(--ink-deep);
+  background:linear-gradient(180deg,var(--gold-bright) 0%, var(--gold) 100%);
+  border-radius:999px;
+  white-space:nowrap;
+  box-shadow:0 3px 10px rgba(0,0,0,.4);
+}
+
+.plate{
+  position:relative;
+  width:288px; height:16px;
+  margin-top:-2px;
+  border-radius:50%;
+  background:linear-gradient(180deg, var(--gold) 0%, var(--gold-dim) 100%);
+  box-shadow:
+    inset 0 2px 3px rgba(255,241,210,.5),
+    0 16px 28px rgba(0,0,0,.5);
+}
+.plate::after{
+  content:"";
+  position:absolute;
+  left:50%; bottom:-16px;
+  width:76%; height:22px;
+  transform:translateX(-50%);
+  border-radius:50%;
+  background:radial-gradient(ellipse at 50% 40%, rgba(0,0,0,.55), rgba(0,0,0,0) 72%);
+  filter:blur(4px);
+}
+
+.candles{
+  position:absolute;
+  left:50%;
+  bottom:calc(100% - 4px);
+  transform:translateX(-50%);
+  display:flex;
+  align-items:flex-end;
+  gap:16px;
+}
+
+.candle{ position:relative; width:11px; height:56px; }
+
+.stick{
+  position:absolute; inset:0;
+  border-radius:4px 4px 2px 2px;
+  background:repeating-linear-gradient(-45deg, var(--c1) 0 6px, var(--c2) 6px 12px);
+  box-shadow:
+    inset -2px 0 4px rgba(0,0,0,.3),
+    inset  2px 0 4px rgba(255,255,255,.2);
+}
+
+.wick{
+  position:absolute; left:50%; bottom:100%;
+  width:2px; height:5px; margin-left:-1px;
+  border-radius:1px; background:#2E211B;
+}
+
+.flame-wrap{
+  position:absolute; left:50%; bottom:calc(100% + 3px);
+  width:16px; height:24px; margin-left:-8px;
+  transform-origin:50% 100%;
+  transition:opacity .25s ease, transform .32s cubic-bezier(.4,0,1,1);
+}
+.flame{
+  position:absolute; inset:0;
+  border-radius:50% 50% 46% 46% / 62% 62% 38% 38%;
+  background:radial-gradient(ellipse at 50% 76%, #FFF6D8 0%, #FFD873 26%, #F0A93E 58%, #D9612A 100%);
+  filter:
+    drop-shadow(0 0 5px rgba(255,197,90,.95))
+    drop-shadow(0 0 16px rgba(227,106,50,.6));
+  animation:flicker 950ms ease-in-out infinite;
+}
+.flame::after{
+  content:"";
+  position:absolute; left:50%; bottom:16%;
+  width:5px; height:9px; margin-left:-2.5px;
+  border-radius:50% 50% 45% 45% / 60% 60% 40% 40%;
+  background:#FFFBEA; filter:blur(.4px);
+}
+@keyframes flicker{
+  0%,100%{ transform:scale(1) rotate(-2.5deg) translateY(0); }
+  35%    { transform:scale(1.07,.96) rotate(2deg) translateY(-1px); }
+  70%    { transform:scale(.96,1.06) rotate(3.5deg) translateY(.5px); }
+}
+
+.smoke{
+  position:absolute; left:50%; bottom:calc(100% + 10px);
+  width:8px; height:8px; margin-left:-4px;
+  border-radius:50%; background:rgba(200,190,180,.4);
+  filter:blur(2.5px); opacity:0; pointer-events:none;
+}
+.candle.out .flame-wrap{ opacity:0; transform:scale(.25) translateY(5px); }
+.candle.out .smoke{ animation:puff 1.5s ease-out forwards; }
+@keyframes puff{
+  0%  { opacity:.75; transform:translateY(0) scale(.7); }
+  100%{ opacity:0;  transform:translateY(-52px) scale(3.4); }
+}
+
+.blow-btn{
+  margin-top:28px;
+  padding:14px 34px;
+  font-family:'Cormorant Garamond', serif;
+  font-size:1.05rem;
+  font-weight:600;
+  letter-spacing:.02em;
+  color:var(--ink-deep);
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+  background:linear-gradient(180deg,var(--gold-bright) 0%, var(--gold) 100%);
+  box-shadow:
+    0 10px 22px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.5);
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease;
+}
+.blow-btn:hover{
+  transform:translateY(-3px) scale(1.025);
+  box-shadow:0 16px 30px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.55);
+}
+.blow-btn:active{ transform:translateY(0) scale(.975); }
+.blow-btn:disabled{ opacity:.6; cursor:default; transform:none; }
+.blow-btn:focus-visible{ outline:3px solid var(--jade); outline-offset:4px; }
+
+.message{ margin-top:8px; }
+.message > *{
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .75s ease, transform .75s cubic-bezier(.2,.8,.3,1);
+}
+.message.show > *{ opacity:1; transform:none; }
+.message.show > *:nth-child(1){ transition-delay:.05s; }
+.message.show > *:nth-child(2){ transition-delay:.22s; }
+.message.show > *:nth-child(3){ transition-delay:.40s; }
+.message.show > *:nth-child(4){ transition-delay:.55s; }
+
+.headline{
+  margin:20px 0 8px;
+  font-family:'Playfair Display', Georgia, serif;
+  font-size:clamp(1.55rem, 6.4vw, 1.95rem);
+  font-weight:700;
+  line-height:1.4;
+  background:linear-gradient(100deg,var(--gold-bright) 0%, var(--parchment) 45%, var(--gold-bright) 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.sub{
+  margin:0 auto;
+  max-width:23em;
+  font-size:1.08rem;
+  line-height:1.85;
+  color:var(--parchment);
+}
+
+.burmese{
+  margin:10px 0 0;
+  font-size:.98rem;
+  color:var(--gold-bright);
+}
+
+.from{
+  margin:16px 0 0;
+  font-size:.88rem;
+  font-style:italic;
+  color:#B79E82;
+}
+
+@media (max-height:720px){
+  .scene{ height:240px; }
+  .cake{ transform:scale(.84); transform-origin:bottom center; }
+  .halo{ bottom:98px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="motif tl" aria-hidden="true"></div>
+<div class="motif br" aria-hidden="true"></div>
+<div id="bokeh" aria-hidden="true"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<main class="stage">
+  <h1 class="title">Let's celebrate <em>My</em> birthday</h1>
+
+  <div class="scene" id="scene">
+    <div class="halo" aria-hidden="true"></div>
+    <div class="cake" id="cake" aria-hidden="true">
+      <div class="tier tier-top">
+        <div class="candles" id="candles"></div>
+        <div class="gilt-rim"></div>
+        <div class="name-band">Lal Than Cung</div>
+      </div>
+      <div class="tier tier-bottom">
+        <div class="gilt-rim"></div>
+      </div>
+      <div class="plate"></div>
+    </div>
+  </div>
+
+  <button class="blow-btn" id="blowBtn" type="button">
+    Blow out the candles
+  </button>
+
+  <section class="message" id="message" aria-live="polite">
+    <p class="headline">Happy Birthday To Me</p>
+    <p class="sub">Twenty-three looks good on me already. Wishing health, happiness, success and a whole year that keeps its promises.</p>
+    <p class="burmese">Thanks God</p>
+    <p class="from">Happy Birthday</p>
+  </section>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  (function bokeh() {
+    if (REDUCE) return;
+    const host = document.getElementById('bokeh');
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < 16; i++) {
+      const dot = document.createElement('span');
+      const size = 5 + Math.random() * 13;
+      dot.style.left = (Math.random() * 100) + '%';
+      dot.style.width = size + 'px';
+      dot.style.height = size + 'px';
+      dot.style.opacity = (0.2 + Math.random() * 0.35).toFixed(2);
+      dot.style.animationDuration = (11 + Math.random() * 15).toFixed(1) + 's';
+      dot.style.animationDelay = (-Math.random() * 22).toFixed(1) + 's';
+      frag.appendChild(dot);
+    }
+    host.appendChild(frag);
+  })();
+
+  const PALETTE = [
+    ['#E3C36A', '#C69A4A'],
+    ['#5FA187', '#3F7A64'],
+    ['#B23A46', '#701F2A'],
+    ['#E3C36A', '#C69A4A'],
+    ['#5FA187', '#3F7A64']
+  ];
+  const CANDLE_COUNT = 5;
+  const candlesWrap = document.getElementById('candles');
+  const candleEls = [];
+
+  for (let i = 0; i < CANDLE_COUNT; i++) {
+    const pair = PALETTE[i % PALETTE.length];
+    const el = document.createElement('div');
+    el.className = 'candle';
+    el.style.setProperty('--c1', pair[0]);
+    el.style.setProperty('--c2', pair[1]);
+    el.innerHTML =
+      '<span class="stick"></span>' +
+      '<span class="wick"></span>' +
+      '<span class="flame-wrap"><span class="flame"></span></span>' +
+      '<span class="smoke"></span>';
+    candlesWrap.appendChild(el);
+    candleEls.push(el);
+  }
+
+  const canvas = document.getElementById('fx');
+  const ctx = canvas.getContext('2d');
+  const COLORS = ['#E3C36A', '#F0CE7E', '#5FA187', '#B23A46', '#E36A32', '#F4E6C8'];
+  const NUMBER_TEXT = '23';
+
+  const particles = [];
+  let running = false;
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.floor(window.innerWidth * dpr);
+    canvas.height = Math.floor(window.innerHeight * dpr);
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function makeParticle(o) {
+    return {
+      x: o.x, y: o.y, vx: o.vx, vy: o.vy,
+      w: o.w || 8, h: o.h || 8,
+      size: o.size || 20,
+      text: o.text || null,
+      rot: Math.random() * Math.PI * 2,
+      vr: (Math.random() - 0.5) * 0.35,
+      color: COLORS[(Math.random() * COLORS.length) | 0],
+      round: Math.random() < 0.4,
+      life: 1,
+      decay: 0.0026 + Math.random() * 0.0032,
+      sway: Math.random() * Math.PI * 2,
+      swaySpeed: 0.03 + Math.random() * 0.05
+    };
+  }
+
+  function start() { if (!running) { running = true; requestAnimationFrame(tick); } }
+
+  function tick() {
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.vy += 0.16; p.vx *= 0.99; p.vy *= 0.995;
+      p.sway += p.swaySpeed;
+      p.x += p.vx + Math.sin(p.sway) * 0.7;
+      p.y += p.vy; p.rot += p.vr; p.life -= p.decay;
+
+      if (p.life <= 0 || p.y > window.innerHeight + 60) { particles.splice(i, 1); continue; }
+
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, p.life * 1.7);
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+
+      if (p.text) {
+        ctx.font = '700 ' + p.size + 'px "Playfair Display", Georgia, serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(p.text, 0, 0);
+      } else if (p.round) {
+        ctx.beginPath(); ctx.arc(0, 0, p.w / 2, 0, Math.PI * 2); ctx.fill();
+      } else {
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      }
+      ctx.restore();
+    }
+    if (particles.length) { requestAnimationFrame(tick); }
+    else { running = false; ctx.clearRect(0, 0, window.innerWidth, window.innerHeight); }
+  }
+
+  function burst(cx, cy, count) {
+    for (let i = 0; i < count; i++) {
+      const a = Math.random() * Math.PI * 2;
+      const s = 3 + Math.random() * 9;
+      const useText = Math.random() < 0.55;
+      particles.push(makeParticle({
+        x: cx, y: cy,
+        vx: Math.cos(a) * s, vy: Math.sin(a) * s - 4.5,
+        text: useText ? NUMBER_TEXT : null,
+        size: 14 + Math.random() * 24,
+        w: 5 + Math.random() * 6, h: 5 + Math.random() * 6
+      }));
+    }
+    start();
+  }
+
+  function rain(duration) {
+    const end = performance.now() + duration;
+    (function spawn() {
+      if (performance.now() > end) return;
+      for (let i = 0; i < 2; i++) {
+        const useText = Math.random() < 0.5;
+        particles.push(makeParticle({
+          x: Math.random() * window.innerWidth,
+          y: -24 - Math.random() * 90,
+          vx: (Math.random() - 0.5) * 1.3,
+          vy: 1 + Math.random() * 2,
+          text: useText ? NUMBER_TEXT : null,
+          size: 16 + Math.random() * 26,
+          w: 6 + Math.random() * 6, h: 6 + Math.random() * 6
+        }));
+      }
+      start();
+      setTimeout(spawn, 70);
+    })();
+  }
+
+  const scene = document.getElementById('scene');
+  const cake = document.getElementById('cake');
+  const btn = document.getElementById('blowBtn');
+  const message = document.getElementById('message');
+
+  const LABEL_BLOW = 'Blow out the candles';
+  const LABEL_BUSY = 'Blowing out…';
+  const LABEL_AGAIN = 'Celebrate again';
+  let blown = false;
+
+  btn.addEventListener('click', function () {
+    if (btn.disabled) return;
+    if (blown) { reset(); } else { blow(); }
+  });
+
+  function blow() {
+    btn.disabled = true;
+    btn.textContent = LABEL_BUSY;
+    candleEls.forEach(function (c, i) {
+      setTimeout(function () { c.classList.add('out'); }, i * 130);
+    });
+    const finish = candleEls.length * 130 + 480;
+    setTimeout(function () {
+      scene.classList.add('blown');
+      message.classList.add('show');
+      btn.textContent = LABEL_AGAIN;
+      btn.disabled = false;
+      blown = true;
+      if (!REDUCE) celebrate();
+    }, finish);
+  }
+
+  function reset() {
+    blown = false;
+    btn.disabled = false;
+    btn.textContent = LABEL_BLOW;
+    message.classList.remove('show');
+    scene.classList.remove('blown');
+    candleEls.forEach(function (c) { c.classList.remove('out'); });
+    if (!REDUCE) { particles.length = 0; ctx.clearRect(0, 0, window.innerWidth, window.innerHeight); }
+  }
+
+  function celebrate() {
+    const r = cake.getBoundingClientRect();
+    const cx = r.left + r.width / 2;
+    const cy = r.top + r.height * 0.35;
+    burst(cx, cy, 120);
+    setTimeout(function () { burst(window.innerWidth * 0.14, window.innerHeight * 0.32, 55); }, 130);
+    setTimeout(function () { burst(window.innerWidth * 0.86, window.innerHeight * 0.32, 55); }, 260);
+    rain(4000);
+  }
+})();
+</script>
+</body>
+</html>
